@@ -13,6 +13,10 @@ It provides:
 | npm | 5.0.3 |
 | google-chrome-stable | 59 |
 | Xvfb | apt-get |
+| git | apt-get |
+| curl, wget | apt-get |
+| zip, bzip2 | apt-get |
+| jq | apt-get |
 
 -----
 
