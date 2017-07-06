@@ -70,8 +70,6 @@ When using with [karma.js|https://github.com/karma-runner/karma]:
 
 ```
 ...
-  reporters: ['progress', 'kjhtml
-...
   logLevel: config.LOG_DEBUG,
 ...
   browsers: ['Chrome_without_security'],
@@ -80,10 +78,9 @@ When using with [karma.js|https://github.com/karma-runner/karma]:
     Chrome_without_security: {
       base: 'Chrome',
       flags: [
-        //'--headless',
+        //'--headless', // DO NOT USE headless !!!
         '--disable-gpu',
         '--no-sandbox',
-        //'--window-size=1280,1024',
       ]
     }
   }
