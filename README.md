@@ -35,6 +35,17 @@ docker run \
     npm install
 ```
 
+Or take a screenshot via:
+
+```
+docker run \
+    -i -t \
+    -v $(pwd):/work \
+    codeclou/docker-nodejs-chrome-xvfb:latest \
+    google-chrome --no-sandbox --headless --disable-gpu --window-size=1280,768 \
+                  --screenshot=/work/screenshot.png https://codeclou.io
+```
+
 -----
 &nbsp;
 

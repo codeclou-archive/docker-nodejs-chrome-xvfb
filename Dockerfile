@@ -12,6 +12,8 @@ RUN apt-get -qqy update \
     curl \
     jq \
     xvfb \
+    dbus \
+    dbus-x11 \
     build-essential && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
@@ -51,12 +53,23 @@ RUN chmod u+rx,g+rx,o+rx,a-w /opt/docker-entrypoint.sh && \
     mkdir /work-private/ && \
     mkdir /work-bin/ && \
     mkdir /data/ && \
+    mkdir /tmp/.X11-unix && \
+    chown -R root:root /tmp/.X11-unix && \
+    chmod 1777 /tmp/.X11-unix && \
     chown -R worker:worker /work/ && \
     chmod -R u+rwx,g+rwx,o-rwx /work/ && \
     chown -R worker:worker /work-private/ && \
     chown -R worker:worker /work-bin/ && \
     chown -R worker:worker /data/ && \
     chmod -R u+rwx,g+rwx,o-rwx /work-private/
+
+
+#
+# DBUS
+#
+COPY dbus-system.conf /work-bin/dbus-system.conf
+RUN mkdir /var/run/dbus/ && \
+    chown -R worker:worker /var/run/dbus/
 
 
 #
