@@ -11,6 +11,7 @@ RUN apt-get -qqy update \
     wget \
     curl \
     jq \
+    zip \
     xvfb \
     pulseaudio \
     dbus \
