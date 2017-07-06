@@ -17,6 +17,11 @@ export DISPLAY=:99
 eval `dbus-launch --sh-syntax --config-file=/work-bin/dbus-system.conf`
 
 #
+# PULSEAUDIO
+#
+pulseaudio --daemonize
+
+#
 # CHROME
 #
 export CHROME_BIN="/usr/bin/google-chrome"

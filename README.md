@@ -31,6 +31,7 @@ Assuming you are currently inside a NodeJS Project containing a `package.json`, 
 docker run \
     -i -t \
     -v $(pwd):/work \
+    --shm-size=128M \
     codeclou/docker-nodejs-chrome-xvfb:latest \
     npm install
 ```
@@ -41,10 +42,54 @@ Or take a screenshot via:
 docker run \
     -i -t \
     -v $(pwd):/work \
+    --shm-size=128M \
     codeclou/docker-nodejs-chrome-xvfb:latest \
     google-chrome --no-sandbox --headless --disable-gpu --window-size=1280,768 \
                   --screenshot=/work/screenshot.png https://codeclou.io
 ```
+
+-----
+
+&nbsp;
+
+### Usage with Karma.js
+
+Since **Chrome 59** we must use several things, which is handled by docker entrypoint:
+
+ * We need to start pulseaudio, or Chrome will complain about [Audio Managers](https://stackoverflow.com/questions/43943721/error-running-headless-chromium-on-ubuntu)
+ * We need to start dbus
+ * We need to start xvfb
+ * We need some flags for chrome startup
+ * We need a symlink to chromium binary
+
+When using with [karma.js|https://github.com/karma-runner/karma]:
+
+ * Start docker with a greater `/dev/shm` cache and use `--shm-size=128M` or greater.
+ * Configure karma config with Chrome flags:
+
+
+```
+...
+  reporters: ['progress', 'kjhtml
+...
+  logLevel: config.LOG_DEBUG,
+...
+  browsers: ['Chrome_without_security'],
+  singleRun: false,
+  customLaunchers: {
+    Chrome_without_security: {
+      base: 'Chrome',
+      flags: [
+        //'--headless',
+        '--disable-gpu',
+        '--no-sandbox',
+        //'--window-size=1280,1024',
+      ]
+    }
+  }
+});
+```
+
 
 -----
 &nbsp;

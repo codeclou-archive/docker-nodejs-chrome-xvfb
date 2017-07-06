@@ -12,6 +12,7 @@ RUN apt-get -qqy update \
     curl \
     jq \
     xvfb \
+    pulseaudio \
     dbus \
     dbus-x11 \
     build-essential && \
@@ -32,7 +33,8 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
     echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
     apt-get update -qqy && apt-get -qqy install ${CHROME_VERSION:-google-chrome-stable} && \
     rm /etc/apt/sources.list.d/google-chrome.list && \
-    rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/* && \
+    ln -s /usr/bin/google-chrome /usr/bin/chromium-browser
 
 #
 # YARN
