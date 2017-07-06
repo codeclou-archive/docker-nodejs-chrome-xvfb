@@ -10,6 +10,7 @@ RUN apt-get -qqy update \
     unzip \
     wget \
     curl \
+    git \
     jq \
     zip \
     xvfb \
