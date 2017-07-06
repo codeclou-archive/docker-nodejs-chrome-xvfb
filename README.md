@@ -1,13 +1,14 @@
 # docker-nodejs-xvfb-chrome
 
-[![](https://codeclou.github.io/doc/badges/generated/docker-image-size-46.svg)](https://hub.docker.com/r/codeclou/docker-nodejs/tags/) [![](https://codeclou.github.io/doc/badges/generated/docker-from-alpine-3.6.svg)](https://alpinelinux.org/) [![](https://codeclou.github.io/doc/badges/generated/docker-run-as-non-root.svg)](https://docs.docker.com/engine/reference/builder/#/user)
+[![](https://codeclou.github.io/doc/badges/generated/docker-image-size-46.svg)](https://hub.docker.com/r/codeclou/docker-nodejs-chrome-xvfb/tags/) [![](https://codeclou.github.io/doc/badges/generated/docker-from-ubuntu-16.04.svg)](https://www.ubuntu.com/) [![](https://codeclou.github.io/doc/badges/generated/docker-run-as-non-root.svg)](https://docs.docker.com/engine/reference/builder/#/user)
 
-Docker-Image to run [NodeJS](https://nodejs.org/en/) for dockerized builds and xvfb with chromium.
+Docker-Image to run [NodeJS](https://nodejs.org/en/) for dockerized builds and xvfb with google chrome.
 
 It provides:
  * yarn version 0.27.5
- * node.js version 7.10.0
- * npm version 5.0.4
+ * node.js version 8.1.3
+ * npm version 5.0.3
+ * google-chrome-stable
 
 -----
 
@@ -30,7 +31,7 @@ Assuming you are currently inside a NodeJS Project containing a `package.json`, 
 docker run \
     -i -t \
     -v $(pwd):/work \
-    codeclou/docker-nodejs:yarn-0.0.27.5-npm-5.0.4-nodejs-7.10.0 \
+    codeclou/docker-nodejs-chrome-xvfb:latest \
     npm install
 ```
 

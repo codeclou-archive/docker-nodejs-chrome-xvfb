@@ -1,29 +1,52 @@
-FROM alpine:3.6
+FROM ubuntu:16.04
 
 #
 # BASE PACKAGES
 #
-RUN apk add --no-cache \
-            bash \
-            gnupg \
-            git \
-            curl \
-            jq \
-            zip \
-            ca-certificates \
-            nodejs-current \
-            nodejs-npm \
-            xvfb \
-            chromium && \
-            npm install npm@latest -g
+RUN apt-get -qqy update \
+    && apt-get -qqy --no-install-recommends install \
+    bzip2 \
+    ca-certificates \
+    unzip \
+    wget \
+    curl \
+    jq \
+    xvfb \
+    build-essential && \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+
+#
+# NODEJS
+#
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
+    apt-get update -qqy && apt-get -qqy install -y nodejs && \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+
+#
+# CHROME
+#
+ARG CHROME_VERSION="google-chrome-stable"
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
+    apt-get update -qqy && apt-get -qqy install ${CHROME_VERSION:-google-chrome-stable} && \
+    rm /etc/apt/sources.list.d/google-chrome.list && \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+
+#
+# YARN
+#
+RUN wget -q -O - https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list && \
+    apt-get update -qqy && apt-get -qqy install yarn && \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 #
 # INSTALL AND CONFIGURE
 #
 COPY docker-entrypoint.sh /opt/docker-entrypoint.sh
 RUN chmod u+rx,g+rx,o+rx,a-w /opt/docker-entrypoint.sh && \
-    addgroup -g 10777 worker && \
-    adduser -D -G worker -u 10777 worker && \
+    addgroup --gid 10777 worker && \
+    adduser --gecos "" --disabled-login --disabled-password --gid 10777 --uid 10777 worker && \
     mkdir /work/ && \
     mkdir /work-private/ && \
     mkdir /work-bin/ && \
@@ -33,31 +56,13 @@ RUN chmod u+rx,g+rx,o+rx,a-w /opt/docker-entrypoint.sh && \
     chown -R worker:worker /work-private/ && \
     chown -R worker:worker /work-bin/ && \
     chown -R worker:worker /data/ && \
-    chmod -R u+rwx,g+rwx,o-rwx /work-private/ && \
-    rm -rf /tmp/* /var/cache/apk/*
+    chmod -R u+rwx,g+rwx,o-rwx /work-private/
 
-ENV DISPLAY :99.0
-ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
-#
-# MAKE FONTCONFIG WORK - SEE: https://github.com/codeclou/docker-oracle-jdk/blob/master/test/fontconfig/README.md
-#
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/jdk/jre/lib/amd64/server/:/usr/lib/:/lib/
-RUN apk add --no-cache libgcc \
-                       ttf-dejavu \
-                       fontconfig \
-                       libgcc
 
 #
 # RUN
 #
-EXPOSE 2990
 USER worker
-
-#
-# YARN INSTALL
-#
-RUN curl -o- -L https://yarnpkg.com/install.sh | bash
 
 WORKDIR /work/
 VOLUME ["/work"]
@@ -65,4 +70,4 @@ VOLUME ["/work-private"]
 VOLUME ["/work-bin"]
 VOLUME ["/data"]
 ENTRYPOINT ["/opt/docker-entrypoint.sh"]
-CMD ["npm", "-version"]
+CMD ["yarn", "--version"]
