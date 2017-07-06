@@ -32,7 +32,7 @@ docker run \
     -i -t \
     -v $(pwd):/work \
     --shm-size=128M \
-    codeclou/docker-nodejs-chrome-xvfb:latest \
+    codeclou/docker-nodejs-chrome-xvfb:node-8.1.3-chome-59 \
     npm install
 ```
 
@@ -43,7 +43,7 @@ docker run \
     -i -t \
     -v $(pwd):/work \
     --shm-size=128M \
-    codeclou/docker-nodejs-chrome-xvfb:latest \
+    codeclou/docker-nodejs-chrome-xvfb:node-8.1.3-chome-59 \
     google-chrome --no-sandbox --headless --disable-gpu --window-size=1280,768 \
                   --screenshot=/work/screenshot.png https://codeclou.io
 ```
@@ -62,7 +62,7 @@ Since **Chrome 59** we must use several things, which is handled by docker entry
  * We need some flags for chrome startup
  * We need a symlink to chromium binary
 
-When using with [karma.js|https://github.com/karma-runner/karma]:
+When using with [karma.js](https://github.com/karma-runner/karma):
 
  * Start docker with a greater `/dev/shm` cache and use `--shm-size=128M` or greater.
  * Configure karma config with Chrome flags:
