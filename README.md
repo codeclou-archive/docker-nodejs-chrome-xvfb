@@ -5,10 +5,14 @@
 Docker-Image to run [NodeJS](https://nodejs.org/en/) for dockerized builds and xvfb with google chrome.
 
 It provides:
- * yarn version 0.27.5
- * node.js version 8.1.3
- * npm version 5.0.3
- * google-chrome-stable
+
+| tool | version |
+|------|---------|
+| yarn | 0.27.5 |
+| node.js | 8.1.3 |
+| npm | 5.0.3 |
+| google-chrome-stable | 59 |
+| Xvfb | apt-get |
 
 -----
 
