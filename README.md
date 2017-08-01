@@ -1,6 +1,6 @@
 # docker-nodejs-xvfb-chrome
 
-[![](https://codeclou.github.io/doc/badges/generated/docker-image-size-403.svg)](https://hub.docker.com/r/cloutainer/k8s-jenkins-slave-nodejs-xvfb-chrome/tags/) [![](https://codeclou.github.io/doc/badges/generated/docker-from-ubuntu-16.04.svg)](https://www.ubuntu.com/) [![](https://codeclou.github.io/doc/badges/generated/docker-run-as-non-root.svg)](https://docs.docker.com/engine/reference/builder/#/user)
+[![](https://codeclou.github.io/doc/badges/generated/docker-image-size-340.svg)](https://hub.docker.com/r/codeclou/docker-nodejs-chrome-xvfb/tags/) [![](https://codeclou.github.io/doc/badges/generated/docker-from-ubuntu-16.04.svg)](https://www.ubuntu.com/) [![](https://codeclou.github.io/doc/badges/generated/docker-run-as-non-root.svg)](https://docs.docker.com/engine/reference/builder/#/user)
 
 Docker-Image to run [NodeJS](https://nodejs.org/en/) for dockerized builds and xvfb with google chrome.
 
