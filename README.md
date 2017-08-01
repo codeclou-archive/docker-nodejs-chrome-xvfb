@@ -95,6 +95,28 @@ When using with [karma.js](https://github.com/karma-runner/karma):
 });
 ```
 
+-----
+
+&nbsp;
+
+### Usage with Protractor
+
+In your `protractor.conf.js`
+
+```js
+// ...
+
+exports.config = {
+  // ...
+  capabilities: {
+    'browserName': 'chrome',
+    'chromeOptions': {
+      'args': ['--disable-gpu', '--no-sandbox']
+    }
+  },
+// ...
+};
+```
 
 -----
 &nbsp;
